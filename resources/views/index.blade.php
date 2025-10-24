@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Mainpage – TownsApp')
+@section('title', 'Mainpage')
 
 @section('content')
 <section id="main">

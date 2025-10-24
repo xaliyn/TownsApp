@@ -9,15 +9,15 @@ class Town extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tname', 'county_id', 'population_id'];
+    protected $fillable = ['tname', 'countyid'];
 
     public function county()
     {
-        return $this->belongsTo(County::class, 'county_id', 'id');
+        return $this->belongsTo(County::class, 'countyid', 'id');
     }
 
-    public function population()
+    public function populationRecords()
     {
-        return $this->belongsTo(Population::class, 'population_id', 'id');
+        return $this->hasMany(Population::class, 'townid', 'id');
     }
 }

@@ -48,7 +48,7 @@
     </header>
 
     <!-- Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" style="overflow-y:auto; max-height:90vh;">
         @yield('content')
     </div>
 

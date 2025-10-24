@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Admin – TownsApp')
+@section('title', 'Admin')
 @section('content')
 <section id="admin-panel">
     <h1>Admin Panel</h1>

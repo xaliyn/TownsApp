@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Town extends Model
+class Population extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tname', 'county_id', 'population_id'];
+    protected $fillable = ['townid', 'ryear', 'women', 'total'];
 
-    public function county()
+    public function town()
     {
-        return $this->belongsTo(County::class, 'county_id', 'id');
-    }
-
-    public function population()
-    {
-        return $this->belongsTo(Population::class, 'population_id', 'id');
+        return $this->belongsTo(Town::class, 'townid', 'id');
     }
 }

@@ -3,25 +3,38 @@
 @section('title', 'Database – TownsApp')
 
 @section('content')
-<section id="database">
-    <h2>Database Menu</h2>
-    <p>List of Hungarian towns with county and population information.</p>
+<h2>Hungarian Towns Database</h2>
+<p>List of Hungarian towns with county and population information.</p>
 
-    <table border="1" cellpadding="8" cellspacing="0" style="margin-top:20px;width:90%;text-align:left">
+<table style="width:90%; margin:auto; border-collapse:collapse;">
+    <thead style="background-color:#222; color:#fff;">
         <tr>
-            <th>ID</th>
-            <th>Town Name</th>
-            <th>County</th>
-            <th>Population</th>
+            <th style="padding:8px;">ID</th>
+            <th style="padding:8px;">Town Name</th>
+            <th style="padding:8px;">County</th>
+            <th style="padding:8px;">Population (latest year)</th>
         </tr>
-        @foreach($towns as $town)
-        <tr>
-            <td>{{ $town->id }}</td>
-            <td>{{ $town->tname }}</td>
-            <td>{{ $town->county->cname ?? '—' }}</td>
-            <td>{{ $town->population->pcount ?? '—' }}</td>
-        </tr>
-        @endforeach
-    </table>
-</section>
+    </thead>
+    <tbody>
+@foreach($towns as $town)
+<tr style="color:#ddd;">
+    <td style="padding:6px;">{{ $town->id }}</td>
+    <td style="padding:6px;">{{ $town->tname }}</td>
+    <td style="padding:6px;">{{ $town->county->cname ?? '—' }}</td>
+    <td style="padding:6px;">
+        @if($town->populationRecords->isNotEmpty())
+            {{ $town->populationRecords->last()->total }}
+        @else
+            —
+        @endif
+    </td>
+</tr>
+@endforeach
+</tbody>
+
+</table>
+
+<div style="margin-top:20px; text-align:center;">
+    {{ $towns->links() }}
+</div>
 @endsection

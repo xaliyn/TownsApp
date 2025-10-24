@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Contact – TownsApp')
+@section('title','Contact menu')
 
 @section('content')
 <section id="contact">

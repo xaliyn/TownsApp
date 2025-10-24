@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Messages – TownsApp')
+@section('title','Messages')
 
 @section('content')
 <h2>Messages (registered users only)</h2>
