@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\DatabaseController;
+
 
 // Contact form – open to all visitors
 Route::get('/contact', [MessageController::class, 'contact'])->name('contact');
@@ -24,8 +26,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/', fn() => view('index'))->name('home');
 
 // Database Menu (Task 4)
-Route::get('/database', fn() => view('database'))->middleware('auth');
-
+Route::get('/database', [DatabaseController::class, 'index'])->middleware('auth');
 // Graph (Task 7)
 Route::get('/graph', fn() => view('graph'));
 
