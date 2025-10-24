@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Town;
-use App\Models\Population;
 
 class GraphController extends Controller
 {
     public function index()
     {
+
         $towns = Town::with(['populationRecords' => function ($query) {
             $query->latest('ryear');
         }])
-        ->take(10) 
+        ->take(10)
         ->get();
 
         $labels = [];
