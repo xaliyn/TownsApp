@@ -9,10 +9,10 @@ class GraphController extends Controller
 {
     public function index()
     {
-
         $towns = Town::with(['populationRecords' => function ($query) {
             $query->latest('ryear');
         }])
+        ->has('populationRecords')
         ->take(10)
         ->get();
 
@@ -23,6 +23,7 @@ class GraphController extends Controller
             $labels[] = $town->tname;
             $populations[] = $town->populationRecords->last()->total ?? 0;
         }
+
 
         return view('graph', compact('labels', 'populations'));
     }

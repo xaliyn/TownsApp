@@ -48,9 +48,12 @@
     </header>
 
     <!-- Wrapper -->
+    
     <div id="wrapper" style="overflow-y:auto; max-height:90vh;">
         @yield('content')
     </div>
+     
+   
 
     <!-- Footer -->
     <footer id="footer">
