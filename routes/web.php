@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\GraphController;
+
 
 
 // Contact form – open to all visitors
@@ -35,3 +37,6 @@ Route::get('/crud', fn() => view('crud'))->middleware('auth');
 
 // Admin (Task 3 – visible only for role=admin)
 Route::get('/admin', fn() => view('admin'))->middleware('auth');
+
+
+Route::get('/graph', [GraphController::class, 'index'])->middleware('auth');
