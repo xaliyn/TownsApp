@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\CrudController;
 
 
 
@@ -40,3 +41,13 @@ Route::get('/admin', fn() => view('admin'))->middleware('auth');
 
 
 Route::get('/graph', [GraphController::class, 'index'])->middleware('auth');
+
+// Everyone who is logged in can access CRUD
+Route::middleware('auth')->group(function () {
+    Route::get('/crud', [CrudController::class, 'index'])->name('crud.index');
+    Route::get('/crud/create', [CrudController::class, 'create'])->name('crud.create');
+    Route::post('/crud', [CrudController::class, 'store'])->name('crud.store');
+    Route::get('/crud/{id}/edit', [CrudController::class, 'edit'])->name('crud.edit');
+    Route::put('/crud/{id}', [CrudController::class, 'update'])->name('crud.update');
+    Route::delete('/crud/{id}', [CrudController::class, 'destroy'])->name('crud.destroy');
+});
