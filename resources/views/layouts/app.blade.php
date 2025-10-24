@@ -16,26 +16,33 @@
     <header id="header">
         <nav>
             <ul>
-                <li><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="{{ url('/database') }}">Database</a></li>
-                <li><a href="{{ url('/contact') }}">Contact</a></li>
-                <li><a href="{{ url('/graph') }}">Graph</a></li>
-                <li><a href="{{ url('/crud') }}">CRUD</a></li>
-                <li><a href="{{ url('/admin') }}">Admin</a></li>
+               <li><a href="{{ url('/') }}">Home</a></li>
+               <li><a href="{{ url('/database') }}">Database</a></li>
+               <li><a href="{{ url('/contact') }}">Contact</a></li>
+               <li><a href="{{ url('/graph') }}">Graph</a></li>
+               <li><a href="{{ url('/crud') }}">CRUD</a></li>
 
-                @guest
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
-                @else
-                    <li>
-                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Logout ({{ Auth::user()->name }})
-                        </a>
-                    </li>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
-                        @csrf
-                    </form>
-                @endguest
+            @if(Auth::check())
+               <li><a href="{{ url('/messages') }}">Messages</a></li>
+            @endif
+
+            @if(Auth::check() && Auth::user()->role == 'admin')
+               <li><a href="{{ url('/admin') }}">Admin</a></li>
+            @endif
+
+            @guest
+              <li><a href="{{ route('login') }}">Login</a></li>
+              <li><a href="{{ route('register') }}">Register</a></li>
+            @else
+              <li>
+                  <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                     Logout ({{ Auth::user()->name }})
+                  </a>
+             </li>
+             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                  @csrf
+             </form>
+            @endguest
             </ul>
         </nav>
     </header>

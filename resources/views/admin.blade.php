@@ -1,6 +1,19 @@
 @extends('layouts.app')
-@section('title', 'Authentication – TownsApp')
+@section('title', 'Admin – TownsApp')
 @section('content')
-<h2>Admin</h2>
-<p>(Task 2).</p>
+<section id="admin-panel">
+    <h1>Admin Panel</h1>
+    <p>Welcome, <strong>{{ Auth::user()->name }}</strong>!</p>
+
+    @if(Auth::user()->role == 'admin')
+        <p>You have administrator privileges.</p>
+        <ul>
+            <li>Manage users</li>
+            <li>Access all database features</li>
+            <li>Modify CRUD entries</li>
+        </ul>
+    @else
+        <p>You do not have permission to view admin only content.</p>
+    @endif
+</section>
 @endsection
