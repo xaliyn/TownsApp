@@ -10,7 +10,7 @@ class CrudController extends Controller
 {
     public function index()
     {
-        $towns = Town::with('county')->paginate(10);
+        $towns = Town::with('county')->paginate(50);
         return view('crud', compact('towns'));
     }
 
