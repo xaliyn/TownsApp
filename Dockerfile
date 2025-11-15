@@ -8,7 +8,7 @@
     # copy resource files required by vite
     COPY resources resources
     
-    RUN npm ci --silent
+    RUN npm install --silent
     RUN npm run build
     
     # ---------- Build PHP app ----------
