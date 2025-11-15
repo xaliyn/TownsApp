@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
     <!-- Theme CSS -->
-    <link rel="stylesheet" href="{{ asset('theme/assets/css/main.css') }}" />
-    <noscript><link rel="stylesheet" href="{{ asset('theme/assets/css/noscript.css') }}" /></noscript>
+    <link rel="stylesheet" href="{{ secure_asset('theme/assets/css/main.css') }}" />
+    <noscript>
+        <link rel="stylesheet" href="{{ secure_asset('theme/assets/css/noscript.css') }}" />
+    </noscript>
 </head>
 
 <body class="is-preload">
@@ -16,23 +18,23 @@
     <header id="header">
         <nav>
             <ul>
-               <li><a href="{{ url('/') }}">Home</a></li>
-               <li><a href="{{ url('/database') }}">Database</a></li>
-               <li><a href="{{ url('/contact') }}">Contact</a></li>
-               <li><a href="{{ url('/graph') }}">Graph</a></li>
-               <li><a href="{{ url('/crud') }}">CRUD</a></li>
+               <li><a href="{{ secure_url('/') }}">Home</a></li>
+               <li><a href="{{ secure_url('/database') }}">Database</a></li>
+               <li><a href="{{ secure_url('/contact') }}">Contact</a></li>
+               <li><a href="{{ secure_url('/graph') }}">Graph</a></li>
+               <li><a href="{{ secure_url('/crud') }}">CRUD</a></li>
 
             @if(Auth::check())
-               <li><a href="{{ url('/messages') }}">Messages</a></li>
+               <li><a href="{{ secure_url('/messages') }}">Messages</a></li>
             @endif
 
             @if(Auth::check() && Auth::user()->role == 'admin')
-               <li><a href="{{ url('/admin') }}">Admin</a></li>
+               <li><a href="{{ secure_url('/admin') }}">Admin</a></li>
             @endif
 
             @guest
-              <li><a href="{{ route('login') }}">Login</a></li>
-              <li><a href="{{ route('register') }}">Register</a></li>
+              <li><a href="{{ secure_url('/login') }}">Login</a></li>
+              <li><a href="{{ secure_url('/register') }}">Register</a></li>
             @else
               <li>
                   <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -48,22 +50,19 @@
     </header>
 
     <!-- Wrapper -->
-    
     <div id="wrapper" style="overflow-y:auto; max-height:90vh;">
         @yield('content')
     </div>
-     
-   
 
     <!-- Footer -->
     <footer id="footer">
         <ul class="copyright">
             <li>&copy; TownsApp Laravel Project</li>
-            <li>Design: <a href="⁦https://html5up.net⁩">HTML5 UP</a></li>
+            <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
         </ul>
     </footer>
 
-    <!-- Scripts -->
-    <script src="{{ asset('theme/assets/js/main.js') }}"></script>
+    <!-- Scripts (HTTPS-safe) -->
+    <script src="{{ secure_asset('theme/assets/js/main.js') }}"></script>
 </body>
 </html>
