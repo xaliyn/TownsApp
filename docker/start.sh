@@ -34,3 +34,4 @@ nginx -g 'daemon off;' &
 #Tail logs to stdout so Render shows them (helps debug without shell access)
 tail -n +1 -F /var/log/nginx/error.log /var/log/nginx/access.log /app/storage/logs/laravel.log 2>/dev/null &
 wait
+
