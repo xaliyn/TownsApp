@@ -10,51 +10,32 @@ class FixSequenceSeeder extends Seeder
     public function run(): void
     {
         if (DB::getDriverName() !== 'pgsql') {
-            return; // MySQL does not use sequences
+            return;
         }
 
-        // --- FIX counties.id ---
-        DB::statement("
-            DO $$
-            BEGIN
-                IF NOT EXISTS (
-                    SELECT 1 FROM pg_class WHERE relname = 'counties_id_seq'
-                ) THEN
-                    CREATE SEQUENCE counties_id_seq;
-                    ALTER TABLE counties ALTER COLUMN id SET DEFAULT nextval('counties_id_seq');
-                END IF;
-            END $$;
-        ");
+        // --- FIND THE REAL SEQUENCE NAME FOR counties.id ---
+        $countySeq = DB::table('pg_class')
+            ->join('pg_namespace', 'pg_namespace.oid', '=', 'pg_class.relnamespace')
+            ->where('relkind', 'S')
+            ->where('relname', 'LIKE', 'counties_id_seq%')
+            ->value('relname') ?? 'counties_id_seq';
 
-        DB::statement("
-            SELECT setval(
-                'counties_id_seq',
-                COALESCE((SELECT MAX(id) FROM counties), 1),
-                true
-            );
-        ");
+        // force column to use sequence
+        DB::statement("ALTER TABLE counties ALTER COLUMN id SET DEFAULT nextval('$countySeq');");
 
-        // --- FIX towns.id ---
-        DB::statement("
-            DO $$
-            BEGIN
-                IF NOT EXISTS (
-                    SELECT 1 FROM pg_class WHERE relname = 'towns_id_seq'
-                ) THEN
-                    CREATE SEQUENCE towns_id_seq;
-                    ALTER TABLE towns ALTER COLUMN id SET DEFAULT nextval('towns_id_seq');
-                END IF;
-            END $$;
-        ");
+        // sync the sequence
+        DB::statement("SELECT setval('$countySeq', COALESCE((SELECT MAX(id) FROM counties), 1), true);");
 
-        DB::statement("
-            SELECT setval(
-                'towns_id_seq',
-                COALESCE((SELECT MAX(id) FROM towns), 1),
-                true
-            );
-        ");
 
-        // populations has composite key → NO SEQUENCE NEEDED
+        // --- FIND THE REAL SEQUENCE NAME FOR towns.id ---
+        $townSeq = DB::table('pg_class')
+            ->join('pg_namespace', 'pg_namespace.oid', '=', 'pg_class.relnamespace')
+            ->where('relkind', 'S')
+            ->where('relname', 'LIKE', 'towns_id_seq%')
+            ->value('relname') ?? 'towns_id_seq';
+
+        DB::statement("ALTER TABLE towns ALTER COLUMN id SET DEFAULT nextval('$townSeq');");
+
+        DB::statement("SELECT setval('$townSeq', COALESCE((SELECT MAX(id) FROM towns), 1), true);");
     }
 }
