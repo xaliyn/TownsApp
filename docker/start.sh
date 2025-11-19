@@ -19,6 +19,7 @@ fi
 
 #Run migrations at startup (safe: will be skipped if already applied or fails)
 php artisan migrate --force || true
+php artisan db:seed --force || true
 
 
 #Clear Laravel caches to avoid stale APP_URL or asset paths
