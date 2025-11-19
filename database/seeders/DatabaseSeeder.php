@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CountySeeder::class,
             TownSeeder::class,
             PopulationSeeder::class,
+            FixSequenceSeeder::class,
         ]);
 
         // Detect which database driver is used
