@@ -17,16 +17,14 @@ if [ -f /usr/local/etc/php-fpm.d/www.conf ]; then
   sed -i "s|^listen = .*|listen = 127.0.0.1:9000|g" /usr/local/etc/php-fpm.d/www.conf || true
 fi
 
-#Run migrations at startup (safe: will be skipped if already applied or fails)
+# Run ONLY migrations on Rendersss
+#remove db seed
 php artisan migrate --force || true
-php artisan db:seed --force || true
-
 
 #Clear Laravel caches to avoid stale APP_URL or asset paths
 php artisan config:clear || true
 php artisan cache:clear || true
 php artisan view:clear || true
-
 
 #start php-fpm (background) and nginx (foreground)
 php-fpm -D
@@ -35,4 +33,3 @@ nginx -g 'daemon off;' &
 #Tail logs to stdout so Render shows them (helps debug without shell access)
 tail -n +1 -F /var/log/nginx/error.log /var/log/nginx/access.log /app/storage/logs/laravel.log 2>/dev/null &
 wait
-
