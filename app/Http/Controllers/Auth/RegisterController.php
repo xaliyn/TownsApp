@@ -16,21 +16,22 @@ class RegisterController extends Controller
     }
 
     public function register(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+{
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|confirmed|min:6',
+        'role' => 'required'
+    ]);
 
-        $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-            'role'     => 'registered', // ✅ sets default role for new users
-        ]);
+    $user = \App\Models\User::create([
+        'name'     => $request->name,
+        'email'    => $request->email,
+        'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+        'role'     => $request->role,  // IMPORTANT
+    ]);
 
-        Auth::login($user);
-        return redirect('/')->with('ok', 'You have registered successfully!');
-    }
+    \Illuminate\Support\Facades\Auth::login($user);
+    return redirect('/');
+}
 }
