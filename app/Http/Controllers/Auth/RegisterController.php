@@ -28,7 +28,7 @@ class RegisterController extends Controller
         'name'     => $request->name,
         'email'    => $request->email,
         'password' => \Illuminate\Support\Facades\Hash::make($request->password),
-        'role'     => $request->role,  // IMPORTANT
+        'role'     => $request->role, // VERY IMPORTANT
     ]);
 
     \Illuminate\Support\Facades\Auth::login($user);
